@@ -79,6 +79,17 @@ message CreateRelease {
   }
 }
 
+message CreateCommit {
+  message Request {
+    repeated string files_path = 1;
+    string message = 2;
+  }
+  message Response  {
+    string short_id =1;
+    string error = 2;
+  }
+}
+
 service ProviderPlugin {
   rpc Init(ProviderInit.Request) returns (ProviderInit.Response);
   rpc Name(ProviderName.Request) returns (ProviderName.Response);
@@ -87,4 +98,5 @@ service ProviderPlugin {
   rpc GetCommits(GetCommits.Request) returns (GetCommits.Response);
   rpc GetReleases(GetReleases.Request) returns (GetReleases.Response);
   rpc CreateRelease(CreateRelease.Request) returns (CreateRelease.Response);
+  rpc CommitFilesChanged(CreateCommit.Request) returns (CreateCommit.Response);
 }

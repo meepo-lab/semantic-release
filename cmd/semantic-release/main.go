@@ -271,16 +271,7 @@ func cliHandler(cmd *cobra.Command, args []string) {
 		exitIfError(errors.New("DRY RUN: no release was created"), 0)
 	}
 
-	logger.Println("creating release...")
-	newRelease := &provider.CreateReleaseConfig{
-		Changelog:  changelogRes,
-		NewVersion: newVer,
-		Prerelease: conf.Prerelease,
-		Branch:     currentBranch,
-		SHA:        currentSha,
-	}
-	exitIfError(prov.CreateRelease(newRelease))
-
+	// Files updating
 	if conf.Ghr {
 		exitIfError(ioutil.WriteFile(".ghr", []byte(fmt.Sprintf("-u %s -r %s v%s", repoInfo.Owner, repoInfo.Repo, newVer)), 0644))
 	}
@@ -303,7 +294,25 @@ func cliHandler(cmd *cobra.Command, args []string) {
 		for _, f := range conf.UpdateFiles {
 			exitIfError(updater.Apply(f, newVer))
 		}
+
+		message := fmt.Sprintf("%s %s", conf.FilesUpdaterOpts["message"], newVer)
+		shortId, err := prov.CommitFilesChanged(conf.UpdateFiles, message)
+		exitIfError(err)
+
+		logger.Println("updated file changed")
+		logger.Println("=> update current sha: " + shortId)
+		currentSha = shortId
 	}
+
+	logger.Println("creating release...")
+	newRelease := &provider.CreateReleaseConfig{
+		Changelog:  changelogRes,
+		NewVersion: newVer,
+		Prerelease: conf.Prerelease,
+		Branch:     currentBranch,
+		SHA:        currentSha,
+	}
+	exitIfError(prov.CreateRelease(newRelease))
 
 	herr := hooksExecutor.Success(&hooks.SuccessHookConfig{
 		Commits:     commits,

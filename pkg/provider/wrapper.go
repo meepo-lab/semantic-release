@@ -64,6 +64,17 @@ func (s *Server) CreateRelease(ctx context.Context, request *CreateRelease_Reque
 	return res, nil
 }
 
+func (s *Server) CommitFilesChanged(ctx context.Context, request *CreateCommit_Request) (*CreateCommit_Response, error) {
+	shortId, err := s.Impl.CommitFilesChanged(request.FilesPath, request.Message)
+	res := &CreateCommit_Response{
+		ShortId: shortId,
+	}
+	if err != nil {
+		res.Error = err.Error()
+	}
+	return res, nil
+}
+
 type Client struct {
 	Impl ProviderPluginClient
 }
@@ -79,6 +90,22 @@ func (c *Client) Init(m map[string]string) error {
 		return errors.New(res.Error)
 	}
 	return nil
+}
+
+func (c *Client) Name() string {
+	res, err := c.Impl.Name(context.Background(), &ProviderName_Request{})
+	if err != nil {
+		panic(err)
+	}
+	return res.Name
+}
+
+func (c *Client) Version() string {
+	res, err := c.Impl.Version(context.Background(), &ProviderVersion_Request{})
+	if err != nil {
+		panic(err)
+	}
+	return res.Version
 }
 
 func (c *Client) GetInfo() (*RepositoryInfo, error) {
@@ -132,18 +159,16 @@ func (c *Client) CreateRelease(config *CreateReleaseConfig) error {
 	return nil
 }
 
-func (c *Client) Name() string {
-	res, err := c.Impl.Name(context.Background(), &ProviderName_Request{})
+func (c *Client) CommitFilesChanged(filesPath []string, message string) (string, error) {
+	res, err := c.Impl.CommitFilesChanged(context.Background(), &CreateCommit_Request{
+		FilesPath: filesPath,
+		Message:   message,
+	})
 	if err != nil {
-		panic(err)
+		return res.ShortId, err
 	}
-	return res.Name
-}
-
-func (c *Client) Version() string {
-	res, err := c.Impl.Version(context.Background(), &ProviderVersion_Request{})
-	if err != nil {
-		panic(err)
+	if res.Error != "" {
+		return res.ShortId, errors.New(res.Error)
 	}
-	return res.Version
+	return res.ShortId, nil
 }
