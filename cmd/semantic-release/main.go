@@ -11,13 +11,13 @@ import (
 	"syscall"
 
 	"github.com/Masterminds/semver/v3"
-	"github.com/go-semantic-release/semantic-release/v2/pkg/config"
-	"github.com/go-semantic-release/semantic-release/v2/pkg/generator"
-	"github.com/go-semantic-release/semantic-release/v2/pkg/hooks"
-	"github.com/go-semantic-release/semantic-release/v2/pkg/plugin/manager"
-	"github.com/go-semantic-release/semantic-release/v2/pkg/provider"
-	"github.com/go-semantic-release/semantic-release/v2/pkg/semrel"
 	"github.com/spf13/cobra"
+	"github.com/ted-vo/semantic-release/v3/pkg/config"
+	"github.com/ted-vo/semantic-release/v3/pkg/generator"
+	"github.com/ted-vo/semantic-release/v3/pkg/hooks"
+	"github.com/ted-vo/semantic-release/v3/pkg/plugin/manager"
+	"github.com/ted-vo/semantic-release/v3/pkg/provider"
+	"github.com/ted-vo/semantic-release/v3/pkg/semrel"
 )
 
 // SRVERSION is the semantic-release version (added at compile time)
@@ -79,7 +79,7 @@ func mergeConfigWithDefaults(defaults, conf map[string]string) {
 }
 
 func cliHandler(cmd *cobra.Command, args []string) {
-	logger := log.New(os.Stderr, "[go-semantic-release]: ", 0)
+	logger := log.New(os.Stderr, "[semantic-release]: ", 0)
 	exitIfError := errorHandler(logger)
 
 	logger.Printf("version: %s\n", SRVERSION)

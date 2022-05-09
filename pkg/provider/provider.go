@@ -1,7 +1,7 @@
 package provider
 
 import (
-	"github.com/go-semantic-release/semantic-release/v2/pkg/semrel"
+	"github.com/ted-vo/semantic-release/v3/pkg/semrel"
 )
 
 type Provider interface {

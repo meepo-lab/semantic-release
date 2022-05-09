@@ -1,9 +1,11 @@
 # :package::rocket: semantic-release
 
-[![CI](https://github.com/go-semantic-release/semantic-release/workflows/CI/badge.svg?branch=master)](https://github.com/go-semantic-release/semantic-release/actions?query=workflow%3ACI+branch%3Amaster)
-[![pipeline status](https://gitlab.com/go-semantic-release/semantic-release/badges/master/pipeline.svg)](https://gitlab.com/go-semantic-release/semantic-release/pipelines)
-[![Go Report Card](https://goreportcard.com/badge/github.com/go-semantic-release/semantic-release)](https://goreportcard.com/report/github.com/go-semantic-release/semantic-release)
-[![PkgGoDev](https://pkg.go.dev/badge/github.com/go-semantic-release/semantic-release/v2)](https://pkg.go.dev/github.com/go-semantic-release/semantic-release/v2)
+## This is hard fork from [go-semantic-release](https://github.com/go-semantic-release/semantic-release) for personal customize update.
+
+[![CI](https://github.com/ted-vo/semantic-release/workflows/CI/badge.svg?branch=master)](https://github.com/ted-vo/semantic-release/actions?query=workflow%3ACI+branch%3Amaster)
+[![pipeline status](https://gitlab.com/ted-vo/semantic-release/badges/master/pipeline.svg)](https://gitlab.com/ted-vo/semantic-release/pipelines)
+[![Go Report Card](https://goreportcard.com/badge/github.com/ted-vo/semantic-release)](https://goreportcard.com/report/github.com/ted-vo/semantic-release)
+[![PkgGoDev](https://pkg.go.dev/badge/github.com/ted-vo/semantic-release/v3)](https://pkg.go.dev/github.com/ted-vo/semantic-release/v3)
 
 > fully automated package/module/image publishing
 
@@ -21,7 +23,7 @@ You can enforce semantic commit messages using [a git hook](https://github.com/h
 
 ## Installation
 
-### Option 1: Use the go-semantic-release GitHub Action ([go-semantic-release/action](https://github.com/go-semantic-release/action))
+### Option 1: Use the ted-vo GitHub Action ([ted-vo/action](https://github.com/ted-vo/action))
 
 ### Option 2: Install `semantic-release` manually
 
@@ -31,16 +33,16 @@ curl -SL https://get-release.xyz/semantic-release/linux/amd64 -o ./semantic-rele
 
 ## Plugin System
 
-Since v2, semantic-release is equipped with a plugin system. The plugins are standalone binaries that use [hashicorp/go-plugin](https://github.com/hashicorp/go-plugin) as a plugin library. `semantic-release` automatically downloads the necessary plugins if they don't exist locally. The plugins are stored in the `.semrel` directory of the current working directory in the following format: `.semrel/<os>_<arch>/<plugin name>/<version>/`. The go-semantic-release plugins API (`https://plugins.go-semantic-release.xyz/api/v1/`) is used to resolve plugins to the correct binary. The served content of the API can be found [here](https://github.com/go-semantic-release/go-semantic-release.github.io/tree/plugin-index), and a list of all existing plugins can be found [here](https://plugins.go-semantic-release.xyz/api/v1/plugins.json).
+Since v2, semantic-release is equipped with a plugin system. The plugins are standalone binaries that use [hashicorp/go-plugin](https://github.com/hashicorp/go-plugin) as a plugin library. `semantic-release` automatically downloads the necessary plugins if they don't exist locally. The plugins are stored in the `.semrel` directory of the current working directory in the following format: `.semrel/<os>_<arch>/<plugin name>/<version>/`. The ted-vo plugins API (`https://plugins.ted-vo.xyz/api/v1/`) is used to resolve plugins to the correct binary. The served content of the API can be found [here](https://github.com/ted-vo/ted-vo.github.io/tree/plugin-index), and a list of all existing plugins can be found [here](https://plugins.ted-vo.xyz/api/v1/plugins.json).
 
 ### Plugin Types
 
-* Commit Analyzer ([Docs](https://pkg.go.dev/github.com/go-semantic-release/semantic-release/v2/pkg/analyzer?tab=doc#CommitAnalyzer), [Example](https://github.com/go-semantic-release/commit-analyzer-cz))
-* CI Condition ([Docs](https://pkg.go.dev/github.com/go-semantic-release/semantic-release/v2/pkg/condition?tab=doc#CICondition), [Example](https://github.com/go-semantic-release/condition-github))
-* Changelog Generator ([Docs](https://pkg.go.dev/github.com/go-semantic-release/semantic-release/v2/pkg/generator?tab=doc#ChangelogGenerator), [Example](https://github.com/go-semantic-release/changelog-generator-default))
-* Provider ([Docs](https://pkg.go.dev/github.com/go-semantic-release/semantic-release/v2/pkg/provider?tab=doc#Provider), [Example](https://github.com/go-semantic-release/provider-github))
-* Files Updater ([Docs](https://pkg.go.dev/github.com/go-semantic-release/semantic-release/v2/pkg/updater?tab=doc#FilesUpdater), [Example](https://github.com/go-semantic-release/files-updater-npm))
-* Hooks ([Docs](https://pkg.go.dev/github.com/go-semantic-release/semantic-release/v2/pkg/hooks?tab=doc#Hooks), [Example](https://github.com/go-semantic-release/hooks-goreleaser))
+* Commit Analyzer ([Docs](https://pkg.go.dev/github.com/ted-vo/semantic-release/v3/pkg/analyzer?tab=doc#CommitAnalyzer), [Example](https://github.com/ted-vo/commit-analyzer-cz))
+* CI Condition ([Docs](https://pkg.go.dev/github.com/ted-vo/semantic-release/v3/pkg/condition?tab=doc#CICondition), [Example](https://github.com/ted-vo/condition-github))
+* Changelog Generator ([Docs](https://pkg.go.dev/github.com/ted-vo/semantic-release/v3/pkg/generator?tab=doc#ChangelogGenerator), [Example](https://github.com/ted-vo/changelog-generator-default))
+* Provider ([Docs](https://pkg.go.dev/github.com/ted-vo/semantic-release/v3/pkg/provider?tab=doc#Provider), [Example](https://github.com/ted-vo/provider-github))
+* Files Updater ([Docs](https://pkg.go.dev/github.com/ted-vo/semantic-release/v3/pkg/updater?tab=doc#FilesUpdater), [Example](https://github.com/ted-vo/files-updater-npm))
+* Hooks ([Docs](https://pkg.go.dev/github.com/ted-vo/semantic-release/v3/pkg/hooks?tab=doc#Hooks), [Example](https://github.com/ted-vo/hooks-goreleaser))
 
 ### Configuration
 
@@ -76,8 +78,6 @@ Plugins can be configured using CLI flags or the `.semrelrc` config file. By usi
 
 ## Example GitHub Actions
 
-For examples, look at the [go-semantic-release GitHub Action](https://github.com/go-semantic-release/action).
-
 ## Example GitLab CI Config
 
 ### GitLab token
@@ -94,7 +94,7 @@ You can set the GitLab token via the `GITLAB_TOKEN` environment variable or the 
   - release
 
 release:
-  image: registry.gitlab.com/go-semantic-release/semantic-release:latest # Replace this with the current release
+  image: registry.gitlab.com/ted-vo/semantic-release:latest # Replace this with the current release
   stage: release
   # Remove this if you want a release created for each push to master
   when: manual

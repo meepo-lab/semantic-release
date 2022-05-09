@@ -1,4 +1,4 @@
-module github.com/go-semantic-release/semantic-release/v2
+module github.com/ted-vo/semantic-release/v3
 
 go 1.17
 

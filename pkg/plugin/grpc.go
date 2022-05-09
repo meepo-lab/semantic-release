@@ -4,13 +4,13 @@ import (
 	"context"
 	"errors"
 
-	"github.com/go-semantic-release/semantic-release/v2/pkg/analyzer"
-	"github.com/go-semantic-release/semantic-release/v2/pkg/condition"
-	"github.com/go-semantic-release/semantic-release/v2/pkg/generator"
-	"github.com/go-semantic-release/semantic-release/v2/pkg/hooks"
-	"github.com/go-semantic-release/semantic-release/v2/pkg/provider"
-	"github.com/go-semantic-release/semantic-release/v2/pkg/updater"
 	"github.com/hashicorp/go-plugin"
+	"github.com/ted-vo/semantic-release/v3/pkg/analyzer"
+	"github.com/ted-vo/semantic-release/v3/pkg/condition"
+	"github.com/ted-vo/semantic-release/v3/pkg/generator"
+	"github.com/ted-vo/semantic-release/v3/pkg/hooks"
+	"github.com/ted-vo/semantic-release/v3/pkg/provider"
+	"github.com/ted-vo/semantic-release/v3/pkg/updater"
 	"google.golang.org/grpc"
 )
 

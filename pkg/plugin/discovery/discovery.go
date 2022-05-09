@@ -18,15 +18,15 @@ import (
 
 	"github.com/Masterminds/semver/v3"
 	"github.com/cavaliergopher/grab/v3"
-	"github.com/go-semantic-release/semantic-release/v2/pkg/analyzer"
-	"github.com/go-semantic-release/semantic-release/v2/pkg/condition"
-	"github.com/go-semantic-release/semantic-release/v2/pkg/config"
-	"github.com/go-semantic-release/semantic-release/v2/pkg/generator"
-	"github.com/go-semantic-release/semantic-release/v2/pkg/hooks"
-	"github.com/go-semantic-release/semantic-release/v2/pkg/plugin"
-	"github.com/go-semantic-release/semantic-release/v2/pkg/provider"
-	"github.com/go-semantic-release/semantic-release/v2/pkg/updater"
 	"github.com/schollz/progressbar/v3"
+	"github.com/ted-vo/semantic-release/v3/pkg/analyzer"
+	"github.com/ted-vo/semantic-release/v3/pkg/condition"
+	"github.com/ted-vo/semantic-release/v3/pkg/config"
+	"github.com/ted-vo/semantic-release/v3/pkg/generator"
+	"github.com/ted-vo/semantic-release/v3/pkg/hooks"
+	"github.com/ted-vo/semantic-release/v3/pkg/plugin"
+	"github.com/ted-vo/semantic-release/v3/pkg/provider"
+	"github.com/ted-vo/semantic-release/v3/pkg/updater"
 )
 
 const PluginDir = ".semrel"

@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/Masterminds/semver/v3"
-	"github.com/go-semantic-release/semantic-release/v2/pkg/config"
+	"github.com/ted-vo/semantic-release/v3/pkg/config"
 )
 
 func TestCalculateChange(t *testing.T) {
