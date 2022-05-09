@@ -3,7 +3,6 @@
 ## This is hard fork from [go-semantic-release](https://github.com/go-semantic-release/semantic-release) for personal customize update.
 
 [![CI](https://github.com/ted-vo/semantic-release/workflows/CI/badge.svg?branch=master)](https://github.com/ted-vo/semantic-release/actions?query=workflow%3ACI+branch%3Amaster)
-[![pipeline status](https://gitlab.com/ted-vo/semantic-release/badges/master/pipeline.svg)](https://gitlab.com/ted-vo/semantic-release/pipelines)
 [![Go Report Card](https://goreportcard.com/badge/github.com/ted-vo/semantic-release)](https://goreportcard.com/report/github.com/ted-vo/semantic-release)
 [![PkgGoDev](https://pkg.go.dev/badge/github.com/ted-vo/semantic-release/v3)](https://pkg.go.dev/github.com/ted-vo/semantic-release/v3)
 
