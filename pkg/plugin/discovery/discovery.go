@@ -30,7 +30,7 @@ import (
 )
 
 const PluginDir = ".semrel"
-const PluginAPI = "https://semantic-release.xyz/api/v1"
+const PluginAPI = "https://plugins.semantic-release.xyz/api/v1"
 
 var osArchDir = runtime.GOOS + "_" + runtime.GOARCH
 
