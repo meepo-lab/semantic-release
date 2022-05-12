@@ -264,13 +264,6 @@ func cliHandler(cmd *cobra.Command, args []string) {
 		exitIfError(ioutil.WriteFile(conf.Changelog, changelogData, 0644))
 	}
 
-	if conf.Dry {
-		if conf.VersionFile {
-			exitIfError(ioutil.WriteFile(".version-unreleased", []byte(newVer), 0644))
-		}
-		exitIfError(errors.New("DRY RUN: no release was created"), 0)
-	}
-
 	// Files updating
 	if conf.Ghr {
 		exitIfError(ioutil.WriteFile(".ghr", []byte(fmt.Sprintf("-u %s -r %s v%s", repoInfo.Owner, repoInfo.Repo, newVer)), 0644))
@@ -295,13 +288,24 @@ func cliHandler(cmd *cobra.Command, args []string) {
 			exitIfError(updater.Apply(f, newVer))
 		}
 
-		message := fmt.Sprintf("%s %s", conf.FilesUpdaterOpts["message"], newVer)
-		shortId, err := prov.CommitFilesChanged(conf.UpdateFiles, message)
-		exitIfError(err)
+		if conf.Dry {
+			logger.Println("DRY RUN: no files changed was committed")
+		} else {
+			message := fmt.Sprintf("%s %s", conf.FilesUpdaterOpts["message"], newVer)
+			shortId, err := prov.CommitFilesChanged(conf.UpdateFiles, message)
+			exitIfError(err)
 
-		logger.Println("updated file changed")
-		logger.Println("=> update current sha: " + shortId)
-		currentSha = shortId
+			logger.Println("updated file changed")
+			logger.Println("=> update current sha: " + shortId)
+			currentSha = shortId
+		}
+	}
+
+	if conf.Dry {
+		if conf.VersionFile {
+			exitIfError(ioutil.WriteFile(".version-unreleased", []byte(newVer), 0644))
+		}
+		exitIfError(errors.New("DRY RUN: no release was created"), 0)
 	}
 
 	logger.Println("creating release...")
