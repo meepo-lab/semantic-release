@@ -2,3 +2,5 @@
 test/.npmrc
 .idea/
 .dccache
+.semrel/
+scripts/test
