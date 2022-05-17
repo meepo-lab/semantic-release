@@ -1,0 +1,41 @@
+syntax = "proto3";
+option go_package = "github.com/ted-vo/semantic-release/v3/pkg/publisher";
+
+message PublisherInit {
+    message Request {
+        map<string, string> config = 1;
+    }
+    message Response {
+        string error = 1;
+    }
+}
+
+message PublisherName {
+    message Request {}
+    message Response {
+        string name = 1;
+    }
+}
+
+message PublisherVersion {
+    message Request {}
+    message Response {
+        string version = 1;
+    }
+}
+
+message PublisherPublish {
+    message Request {
+        string new_release =1;
+    }
+    message Response {
+        string error = 1;
+    }
+}
+
+service PublisherPlugin {
+    rpc Init(PublisherInit.Request) returns (PublisherInit.Response);
+    rpc Name(PublisherName.Request) returns (PublisherName.Response);
+    rpc Version(PublisherVersion.Request) returns (PublisherVersion.Response);
+    rpc Publish(PublisherPublish.Request) returns (PublisherPublish.Response);
+}

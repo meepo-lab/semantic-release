@@ -7,6 +7,7 @@ import (
 	"github.com/ted-vo/semantic-release/v3/pkg/generator"
 	"github.com/ted-vo/semantic-release/v3/pkg/hooks"
 	"github.com/ted-vo/semantic-release/v3/pkg/provider"
+	"github.com/ted-vo/semantic-release/v3/pkg/publisher"
 	"github.com/ted-vo/semantic-release/v3/pkg/updater"
 )
 
@@ -20,6 +21,7 @@ type CIConditionFunc func() condition.CICondition
 type ChangelogGeneratorFunc func() generator.ChangelogGenerator
 type ProviderFunc func() provider.Provider
 type FilesUpdaterFunc func() updater.FilesUpdater
+type PublisherFunc func() publisher.Publisher
 type HooksFunc func() hooks.Hooks
 
 type ServeOpts struct {
@@ -28,6 +30,7 @@ type ServeOpts struct {
 	ChangelogGenerator ChangelogGeneratorFunc
 	Provider           ProviderFunc
 	FilesUpdater       FilesUpdaterFunc
+	Publisher          PublisherFunc
 	Hooks              HooksFunc
 }
 
@@ -66,6 +69,13 @@ func Serve(opts *ServeOpts) {
 		pluginSet[updater.FilesUpdaterPluginName] = &GRPCWrapper{
 			Type: updater.FilesUpdaterPluginName,
 			Impl: opts.FilesUpdater(),
+		}
+	}
+
+	if opts.Publisher != nil {
+		pluginSet[publisher.PluginName] = &GRPCWrapper{
+			Type: publisher.PluginName,
+			Impl: opts.Publisher(),
 		}
 	}
 

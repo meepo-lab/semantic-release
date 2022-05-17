@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-pluginDir=".semrel/$(go env GOOS)_$(go env GOARCH)/semantic-release/3.0.0/"
+pluginDir=".semrel/$(go env GOOS)_$(go env GOARCH)/semantic-release/3.2.0/"
 [[ ! -d "$pluginDir" ]] && {
   echo "creating $pluginDir"
   mkdir -p $pluginDir

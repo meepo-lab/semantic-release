@@ -9,6 +9,7 @@ import (
 	"github.com/ted-vo/semantic-release/v3/pkg/plugin"
 	"github.com/ted-vo/semantic-release/v3/pkg/plugin/discovery"
 	"github.com/ted-vo/semantic-release/v3/pkg/provider"
+	"github.com/ted-vo/semantic-release/v3/pkg/publisher"
 	"github.com/ted-vo/semantic-release/v3/pkg/updater"
 )
 
@@ -99,6 +100,19 @@ func (m *PluginManager) GetChainedUpdater() (*updater.ChainedUpdater, error) {
 		Updaters: updaters,
 	}
 	return updater, nil
+}
+
+func (m *PluginManager) GetPublisher() (publisher.Publisher, error) {
+	opts, err := m.discovery.FindPlugin(publisher.PluginName, m.config.PublisherPlugin)
+	if err != nil {
+		return nil, err
+	}
+
+	pu, err := plugin.StartPlugin(opts)
+	if err != nil {
+		return nil, err
+	}
+	return pu.(publisher.Publisher), nil
 }
 
 func (m *PluginManager) GetChainedHooksExecutor() (*hooks.ChainedHooksExecutor, error) {

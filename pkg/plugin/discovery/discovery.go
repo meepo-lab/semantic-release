@@ -26,6 +26,7 @@ import (
 	"github.com/ted-vo/semantic-release/v3/pkg/hooks"
 	"github.com/ted-vo/semantic-release/v3/pkg/plugin"
 	"github.com/ted-vo/semantic-release/v3/pkg/provider"
+	"github.com/ted-vo/semantic-release/v3/pkg/publisher"
 	"github.com/ted-vo/semantic-release/v3/pkg/updater"
 )
 
@@ -268,6 +269,8 @@ func getPluginType(t string) string {
 		return "provider"
 	case updater.FilesUpdaterPluginName:
 		return "files-updater"
+	case publisher.PluginName:
+		return "publisher"
 	case hooks.PluginName:
 		return "hooks"
 	}

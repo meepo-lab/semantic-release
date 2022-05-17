@@ -301,6 +301,15 @@ func cliHandler(cmd *cobra.Command, args []string) {
 		}
 	}
 
+	if len(conf.PublisherPlugin) > 0 {
+		logger.Println("puslisher load...")
+		publisher, err := pluginManager.GetPublisher()
+		exitIfError(err)
+		logger.Printf("publisher plugins: %s@%s\n", publisher.Name(), publisher.Version())
+		exitIfError(publisher.Init(conf.PublisherOpts))
+		exitIfError(publisher.Publish(newVer))
+	}
+
 	if conf.Dry {
 		if conf.VersionFile {
 			exitIfError(ioutil.WriteFile(".version-unreleased", []byte(newVer), 0644))

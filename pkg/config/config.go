@@ -22,6 +22,8 @@ type Config struct {
 	Changelog                             string
 	FilesUpdaterPlugins                   []string
 	FilesUpdaterOpts                      map[string]string
+	PublisherPlugin                       string
+	PublisherOpts                         map[string]string
 	HooksPlugins                          []string
 	HooksOpts                             map[string]string
 	UpdateFiles                           []string
@@ -96,6 +98,9 @@ func NewConfig(cmd *cobra.Command) (*Config, error) {
 	fuOpts := mergeOpts(
 		viper.GetStringMapString("plugins.files-updater.options"),
 		mustGetStringArray(cmd, "files-updater-opt"))
+	puOpts := mergeOpts(
+		viper.GetStringMapString("plugins.publisher.options"),
+		mustGetStringArray(cmd, "publisher-opt"))
 	hoOpts := mergeOpts(
 		viper.GetStringMapString("plugins.hooks.options"),
 		mustGetStringArray(cmd, "hooks-opt"))
@@ -113,6 +118,8 @@ func NewConfig(cmd *cobra.Command) (*Config, error) {
 		Changelog:                             mustGetString(cmd, "changelog"),
 		FilesUpdaterPlugins:                   viper.GetStringSlice("plugins.files-updater.names"),
 		FilesUpdaterOpts:                      fuOpts,
+		PublisherPlugin:                       viper.GetString("plugins.publisher.name"),
+		PublisherOpts:                         puOpts,
 		HooksPlugins:                          viper.GetStringSlice("plugins.hooks.names"),
 		HooksOpts:                             hoOpts,
 		UpdateFiles:                           mustGetStringArray(cmd, "update"),
@@ -169,6 +176,8 @@ func SetFlags(cmd *cobra.Command) {
 	cmd.Flags().String("changelog", "", "creates a changelog file")
 	cmd.Flags().StringSlice("files-updater", []string{}, "files-updater plugin names")
 	cmd.Flags().StringArray("files-updater-opt", []string{}, "options that are passed to the files-updater plugins")
+	cmd.Flags().String("publisher", "", "publisher plugin name")
+	cmd.Flags().StringArray("publisher-opt", []string{}, "options that are passed to the publisher plugins")
 	cmd.Flags().StringSlice("hooks", []string{}, "hooks plugin names")
 	cmd.Flags().StringArray("hooks-opt", []string{}, "options that are passed to the hooks plugins")
 	cmd.Flags().StringArrayP("update", "u", []string{}, "updates the version of a certain files")
@@ -197,6 +206,7 @@ func SetFlags(cmd *cobra.Command) {
 	must(viper.BindPFlag("plugins.ci-condition.name", cmd.Flags().Lookup("ci-condition")))
 	must(viper.BindPFlag("plugins.changelog-generator.name", cmd.Flags().Lookup("changelog-generator")))
 	must(viper.BindPFlag("plugins.files-updater.names", cmd.Flags().Lookup("files-updater")))
+	must(viper.BindPFlag("plugins.publisher.name", cmd.Flags().Lookup("publisher")))
 	must(viper.BindPFlag("plugins.hooks.names", cmd.Flags().Lookup("hooks")))
 }
 

@@ -10,6 +10,7 @@ import (
 	"github.com/ted-vo/semantic-release/v3/pkg/generator"
 	"github.com/ted-vo/semantic-release/v3/pkg/hooks"
 	"github.com/ted-vo/semantic-release/v3/pkg/provider"
+	"github.com/ted-vo/semantic-release/v3/pkg/publisher"
 	"github.com/ted-vo/semantic-release/v3/pkg/updater"
 	"google.golang.org/grpc"
 )
@@ -42,6 +43,10 @@ func (p *GRPCWrapper) GRPCServer(broker *plugin.GRPCBroker, s *grpc.Server) erro
 		updater.RegisterFilesUpdaterPluginServer(s, &updater.FilesUpdaterServer{
 			Impl: p.Impl.(updater.FilesUpdater),
 		})
+	case publisher.PluginName:
+		publisher.RegisterPublisherPluginServer(s, &publisher.PublisherServer{
+			Impl: p.Impl.(publisher.Publisher),
+		})
 	case hooks.PluginName:
 		hooks.RegisterHooksPluginServer(s, &hooks.Server{
 			Impl: p.Impl.(hooks.Hooks),
@@ -73,6 +78,10 @@ func (p *GRPCWrapper) GRPCClient(ctx context.Context, broker *plugin.GRPCBroker,
 	case updater.FilesUpdaterPluginName:
 		return &updater.FilesUpdaterClient{
 			Impl: updater.NewFilesUpdaterPluginClient(c),
+		}, nil
+	case publisher.PluginName:
+		return &publisher.PublisherClient{
+			Impl: publisher.NewPublisherPluginClient(c),
 		}, nil
 	case hooks.PluginName:
 		return &hooks.Client{
