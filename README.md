@@ -73,7 +73,7 @@ Plugins can be configured using CLI flags or the `.semrelrc` config file. By usi
       }
     },
     "files-updater": {
-      "names": ["npm", "gralde"]
+      "names": ["npm", "gradle"]
     }
   }
 }
