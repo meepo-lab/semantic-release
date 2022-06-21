@@ -22,26 +22,30 @@ You can enforce semantic commit messages using [a git hook](https://github.com/h
 
 ## Installation
 
-### Option 1: Use the ted-vo GitHub Action ([ted-vo/action](https://github.com/ted-vo/action))
-
-### Option 2: Install `semantic-release` manually
-
 ```bash
-curl -SL https://get-release.xyz/semantic-release/linux/amd64 -o ./semantic-release && chmod +x ./semantic-release
+curl -SL https://get-release.xyz/meepo-lab/semantic-release/linux/amd64 -o ./semantic-release && chmod +x ./semantic-release
 ```
 
 ## Plugin System
 
-Since v2, semantic-release is equipped with a plugin system. The plugins are standalone binaries that use [hashicorp/go-plugin](https://github.com/hashicorp/go-plugin) as a plugin library. `semantic-release` automatically downloads the necessary plugins if they don't exist locally. The plugins are stored in the `.semrel` directory of the current working directory in the following format: `.semrel/<os>_<arch>/<plugin name>/<version>/`. The ted-vo plugins API (`https://plugins.ted-vo.xyz/api/v1/`) is used to resolve plugins to the correct binary. The served content of the API can be found [here](https://github.com/ted-vo/ted-vo.github.io/tree/plugin-index), and a list of all existing plugins can be found [here](https://plugins.ted-vo.xyz/api/v1/plugins.json).
+Since v2, semantic-release is equipped with a plugin system.
+
+The plugins are standalone binaries that use [hashicorp/go-plugin](https://github.com/hashicorp/go-plugin) as a plugin library. `semantic-release` automatically downloads the necessary plugins if they don't exist locally.
+
+The plugins are stored in the `.semrel` directory of the current working directory in the following format: 
+
+`.semrel/<os>_<arch>/<plugin name>/<version>/`
+
+The `semantic-release` plugins API (`https://plugins.semantic-release.xyz/api/v1/`) is used to resolve plugins to the correct binary. The served content of the API can be found [here](https://github.com/meepo-lab/semantic-release.github.io/tree/plugin-index), and a list of all existing plugins can be found [here](plugins.semantic-release.xyz/api/v1/plugins.json).
 
 ### Plugin Types
 
-* Commit Analyzer ([Docs](https://pkg.go.dev/github.com/ted-vo/semantic-release/v3/pkg/analyzer?tab=doc#CommitAnalyzer), [Example](https://github.com/ted-vo/commit-analyzer-cz))
-* CI Condition ([Docs](https://pkg.go.dev/github.com/ted-vo/semantic-release/v3/pkg/condition?tab=doc#CICondition), [Example](https://github.com/ted-vo/condition-github))
-* Changelog Generator ([Docs](https://pkg.go.dev/github.com/ted-vo/semantic-release/v3/pkg/generator?tab=doc#ChangelogGenerator), [Example](https://github.com/ted-vo/changelog-generator-default))
-* Provider ([Docs](https://pkg.go.dev/github.com/ted-vo/semantic-release/v3/pkg/provider?tab=doc#Provider), [Example](https://github.com/ted-vo/provider-github))
-* Files Updater ([Docs](https://pkg.go.dev/github.com/ted-vo/semantic-release/v3/pkg/updater?tab=doc#FilesUpdater), [Example](https://github.com/ted-vo/files-updater-npm))
-* Hooks ([Docs](https://pkg.go.dev/github.com/ted-vo/semantic-release/v3/pkg/hooks?tab=doc#Hooks), [Example](https://github.com/ted-vo/hooks-goreleaser))
+* Commit Analyzer ([Docs](https://pkg.go.dev/github.com/ted-vo/semantic-release/v3/pkg/analyzer?tab=doc#CommitAnalyzer), [Example](https://github.com/meepo-lab/commit-analyzer-cz))
+* CI Condition ([Docs](https://pkg.go.dev/github.com/ted-vo/semantic-release/v3/pkg/condition?tab=doc#CICondition), [Example](https://github.com/meepo-lab/condition-github))
+* Changelog Generator ([Docs](https://pkg.go.dev/github.com/ted-vo/semantic-release/v3/pkg/generator?tab=doc#ChangelogGenerator), [Example](https://github.com/meepo-lab/changelog-generator-default))
+* Provider ([Docs](https://pkg.go.dev/github.com/ted-vo/semantic-release/v3/pkg/provider?tab=doc#Provider), [Example](https://github.com/meepo-lab/provider-github))
+* Files Updater ([Docs](https://pkg.go.dev/github.com/ted-vo/semantic-release/v3/pkg/updater?tab=doc#FilesUpdater), [Example](https://github.com/meepo-lab/files-updater-gradle))
+* Hooks: Updating...
 
 ### Configuration
 
@@ -69,7 +73,7 @@ Plugins can be configured using CLI flags or the `.semrelrc` config file. By usi
       }
     },
     "files-updater": {
-      "names": ["npm"]
+      "names": ["npm", "gralde"]
     }
   }
 }
@@ -119,4 +123,4 @@ If you commit to this branch a new incremental pre-release is created everytime 
 
 The [MIT License (MIT)](http://opensource.org/licenses/MIT)
 
-Copyright © 2020 [Christoph Witzko](https://twitter.com/christophwitzko)
+Copyright © 2020 [Christoph Witzko](https://twitter.com/christophwitzko), [TedVo](https://tedvo.dev)
