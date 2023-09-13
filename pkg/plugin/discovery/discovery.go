@@ -6,7 +6,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"io/ioutil"
 	"net/http"
 	"os"
 	"os/exec"
@@ -200,7 +199,7 @@ func (d *Discovery) fetchPlugin(name, pth string, cons *semver.Constraints) (str
 }
 
 func getMatchingVersionDir(pth string, cons *semver.Constraints) (string, error) {
-	vDirs, err := ioutil.ReadDir(pth)
+	vDirs, err := os.ReadDir(pth)
 	if err != nil {
 		return "", err
 	}
@@ -238,7 +237,7 @@ func (d *Discovery) findPluginLocally(pth string, cons *semver.Constraints) (str
 		return "", err
 	}
 
-	files, err := ioutil.ReadDir(vPth)
+	files, err := os.ReadDir(vPth)
 	if err != nil {
 		return "", err
 	}
@@ -249,7 +248,12 @@ func (d *Discovery) findPluginLocally(pth string, cons *semver.Constraints) (str
 		if f.IsDir() {
 			continue
 		}
-		if f.Mode()&0100 == 0 {
+		fInfo, err := f.Info()
+		if err != nil {
+			return "", fmt.Errorf("failed to get file info for %s: %w", f.Name(), err)
+		}
+		// check if the file is executable by the user
+		if fInfo.Mode()&0o100 == 0 {
 			continue
 		}
 		return path.Join(vPth, f.Name()), nil
