@@ -49,16 +49,16 @@ jobs:
       - uses: actions/setup-go@v3
         with:
           go-version: 1.21
+      - run: |
+          go install github.com/mitchellh/gox@latest
+          go install github.com/tcnksm/ghr@latest
+      - uses: actions/checkout@v2
       - run: go build ./cmd/semantic-release/
       - uses: docker/login-action@v1
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - uses: go-semantic-release/action@v1
-        with:
-          bin: ./semantic-release
-          hooks: goreleaser
-          prerelease: true
+      - run: ./scripts/release || exit 0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
